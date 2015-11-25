@@ -21,5 +21,5 @@ public interface VinoControladorRemote {
     
     public void addReferencia(Dominio.Referencia referencia);
     
-//    public Bodega getBodega(int id); 
+    public Bodega getBodega(int id); 
 }

@@ -44,14 +44,14 @@ public class Main {
             }
         }
 
-       // Bodega bodega = vinoControlador.getBodega(1);
+        Bodega bodega = vinoControlador.getBodega(1);
         
-        Bodega bodega = new Bodega();
-
-        bodega.setCif("123120000");
-        bodega.setDireccion("Calle Bodegas Serrada");
-        bodega.setNombre("De Alberto");
-        bodega.setId(1);
+//        Bodega bodega = new Bodega();
+//
+//        bodega.setCif("123120000");
+//        bodega.setDireccion("Calle Bodegas Serrada");
+//        bodega.setNombre("De Alberto");
+//        bodega.setId(1);
         
         Vino vino = new Vino();
 
