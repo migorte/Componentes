@@ -5,7 +5,9 @@
  */
 package Despliegue;
 
+import Dominio.Estadopedido;
 import Dominio.Pedido;
+import Persistencia.EstadopedidoFacadeLocal;
 import Persistencia.PedidoFacadeLocal;
 import java.util.List;
 import javax.ejb.EJB;
@@ -18,6 +20,8 @@ import javax.ejb.Stateless;
 @Stateless
 public class PedidoControlador implements PedidoControladorRemote {
     @EJB
+    private EstadopedidoFacadeLocal estadopedidoFacade;
+    @EJB
     private PedidoFacadeLocal pedidoFacade;
 
     // Add business logic below. (Right-click in editor and choose
@@ -27,7 +31,21 @@ public class PedidoControlador implements PedidoControladorRemote {
         pedidoFacade.create(pedido);
     }
     
+    @Override
     public List<Pedido> getPedidosPendientes(){
         return pedidoFacade.getPedidosPendientes();
+    }
+    
+    @Override
+    public List<Pedido> getPedidosAbonado(String nif){
+        return pedidoFacade.getPedidosAbonado(nif);
+    }
+    
+    @Override
+    public void editPedido(int numeroPedido, String nuevoEstado){
+        Pedido pedido = pedidoFacade.find(this);
+        Estadopedido estado = estadopedidoFacade.getEstadoPedido(nuevoEstado);
+        pedido.setEstado(estado);
+        pedidoFacade.edit(pedido);
     }
 }

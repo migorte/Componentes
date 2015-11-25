@@ -31,4 +31,8 @@ public interface PedidoFacadeLocal {
     int count();
     
     public List<Pedido> getPedidosPendientes();
+    
+    public List<Pedido> getPedidosAbonado(String nif);
+    
+    public Pedido getPedido(int numeroPedido);
 }

@@ -5,6 +5,8 @@
  */
 package Despliegue;
 
+import Dominio.Pedido;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -14,4 +16,9 @@ import javax.ejb.Remote;
 @Remote
 public interface PedidoControladorRemote {
     
+    public List<Pedido> getPedidosPendientes();
+    
+    public List<Pedido> getPedidosAbonado(String nif);
+    
+    public void editPedido(int numeroPedido, String nuevoEstado);
 }

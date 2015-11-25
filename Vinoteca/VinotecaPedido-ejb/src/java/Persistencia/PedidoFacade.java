@@ -18,6 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class PedidoFacade extends AbstractFacade<Pedido> implements PedidoFacadeLocal {
+
     @PersistenceContext(unitName = "VinotecaPedido-ejbPU")
     private EntityManager em;
 
@@ -29,11 +30,25 @@ public class PedidoFacade extends AbstractFacade<Pedido> implements PedidoFacade
     public PedidoFacade() {
         super(Pedido.class);
     }
-    
+
     @Override
-    public List<Pedido> getPedidosPendientes(){
+    public List<Pedido> getPedidosPendientes() {
         Query query = em.createNamedQuery("Pedido.findPendientes");
         query.setParameter("estado", 'P');
         return (List<Dominio.Pedido>) query.getResultList();
+    }
+
+    @Override
+    public List<Pedido> getPedidosAbonado(String nif) {
+        Query query = em.createNamedQuery("Pedido.findByNif");
+        query.setParameter("nif", nif);
+        return (List<Dominio.Pedido>) query.getResultList();
+    }
+    
+    @Override
+    public Pedido getPedido(int numeroPedido) {
+        Query query = em.createNamedQuery("Pedido.findByNumero");
+        query.setParameter("numero", numeroPedido);
+        return (Dominio.Pedido) query.getResultList().get(0);
     }
 }
