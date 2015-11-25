@@ -6,7 +6,6 @@
 package Dominio;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,12 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -60,8 +57,6 @@ public class Factura implements Serializable {
     @JoinColumn(name = "ESTADO", referencedColumnName = "CLAVE")
     @ManyToOne
     private Estadofactura estado;
-    @OneToMany(mappedBy = "numerofactura")
-    private Collection<Pedido> pedidoCollection;
 
     public Factura() {
     }
@@ -116,15 +111,6 @@ public class Factura implements Serializable {
 
     public void setEstado(Estadofactura estado) {
         this.estado = estado;
-    }
-
-    @XmlTransient
-    public Collection<Pedido> getPedidoCollection() {
-        return pedidoCollection;
-    }
-
-    public void setPedidoCollection(Collection<Pedido> pedidoCollection) {
-        this.pedidoCollection = pedidoCollection;
     }
 
     @Override

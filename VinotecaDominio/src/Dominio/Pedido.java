@@ -40,7 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pedido.findByNotaentrega", query = "SELECT p FROM Pedido p WHERE p.notaentrega = :notaentrega"),
     @NamedQuery(name = "Pedido.findByImporte", query = "SELECT p FROM Pedido p WHERE p.importe = :importe"),
     @NamedQuery(name = "Pedido.findByFecharecepcion", query = "SELECT p FROM Pedido p WHERE p.fecharecepcion = :fecharecepcion"),
-    @NamedQuery(name = "Pedido.findByFechaentrega", query = "SELECT p FROM Pedido p WHERE p.fechaentrega = :fechaentrega")})
+    @NamedQuery(name = "Pedido.findByFechaentrega", query = "SELECT p FROM Pedido p WHERE p.fechaentrega = :fechaentrega"),
+    @NamedQuery(name = "Pedido.findByNif", query = "SELECT p FROM Pedido p WHERE p.nif = :nif")})
 public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,17 +63,13 @@ public class Pedido implements Serializable {
     @Column(name = "FECHAENTREGA")
     @Temporal(TemporalType.DATE)
     private Date fechaentrega;
+    @Column(name = "NIF")
+    private String nif;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "numeropedido")
     private Collection<Lineapedido> lineapedidoCollection;
-    @JoinColumn(name = "NUMEROABONADO", referencedColumnName = "NUMEROABONADO")
-    @ManyToOne
-    private Abonado numeroabonado;
     @JoinColumn(name = "ESTADO", referencedColumnName = "CLAVE")
     @ManyToOne(optional = false)
     private Estadopedido estado;
-    @JoinColumn(name = "NUMEROFACTURA", referencedColumnName = "NUMEROFACTURA")
-    @ManyToOne
-    private Factura numerofactura;
 
     public Pedido() {
     }
@@ -129,6 +126,14 @@ public class Pedido implements Serializable {
         this.fechaentrega = fechaentrega;
     }
 
+    public String getNif() {
+        return nif;
+    }
+
+    public void setNif(String nif) {
+        this.nif = nif;
+    }
+
     @XmlTransient
     public Collection<Lineapedido> getLineapedidoCollection() {
         return lineapedidoCollection;
@@ -138,28 +143,12 @@ public class Pedido implements Serializable {
         this.lineapedidoCollection = lineapedidoCollection;
     }
 
-    public Abonado getNumeroabonado() {
-        return numeroabonado;
-    }
-
-    public void setNumeroabonado(Abonado numeroabonado) {
-        this.numeroabonado = numeroabonado;
-    }
-
     public Estadopedido getEstado() {
         return estado;
     }
 
     public void setEstado(Estadopedido estado) {
         this.estado = estado;
-    }
-
-    public Factura getNumerofactura() {
-        return numerofactura;
-    }
-
-    public void setNumerofactura(Factura numerofactura) {
-        this.numerofactura = numerofactura;
     }
 
     @Override

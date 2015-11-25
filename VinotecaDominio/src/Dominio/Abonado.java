@@ -51,8 +51,6 @@ public class Abonado implements Serializable {
     private String password;
     @OneToMany(mappedBy = "numeroabonado")
     private Collection<Preferencia> preferenciaCollection;
-    @OneToMany(mappedBy = "numeroabonado")
-    private Collection<Pedido> pedidoCollection;
     @JoinColumn(name = "NIF", referencedColumnName = "NIF")
     @ManyToOne(optional = false)
     private Persona nif;
@@ -108,15 +106,6 @@ public class Abonado implements Serializable {
 
     public void setPreferenciaCollection(Collection<Preferencia> preferenciaCollection) {
         this.preferenciaCollection = preferenciaCollection;
-    }
-
-    @XmlTransient
-    public Collection<Pedido> getPedidoCollection() {
-        return pedidoCollection;
-    }
-
-    public void setPedidoCollection(Collection<Pedido> pedidoCollection) {
-        this.pedidoCollection = pedidoCollection;
     }
 
     public Persona getNif() {
