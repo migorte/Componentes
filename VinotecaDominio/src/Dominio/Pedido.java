@@ -41,7 +41,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pedido.findByImporte", query = "SELECT p FROM Pedido p WHERE p.importe = :importe"),
     @NamedQuery(name = "Pedido.findByFecharecepcion", query = "SELECT p FROM Pedido p WHERE p.fecharecepcion = :fecharecepcion"),
     @NamedQuery(name = "Pedido.findByFechaentrega", query = "SELECT p FROM Pedido p WHERE p.fechaentrega = :fechaentrega"),
-    @NamedQuery(name = "Pedido.findByNif", query = "SELECT p FROM Pedido p WHERE p.nif = :nif")})
+    @NamedQuery(name = "Pedido.findByNif", query = "SELECT p FROM Pedido p WHERE p.nif = :nif"),
+    @NamedQuery(name = "Pedido.findPendientes", query = "SELECT p FROM Pedido p WHERE p.estado = :estado")})
 public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
