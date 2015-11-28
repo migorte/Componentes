@@ -27,6 +27,7 @@ public class PedidoControlador implements PedidoControladorRemote {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     
+    @Override
     public void newPedido(Pedido pedido){
         pedidoFacade.create(pedido);
     }
@@ -43,7 +44,7 @@ public class PedidoControlador implements PedidoControladorRemote {
     
     @Override
     public void editPedido(int numeroPedido, String nuevoEstado){
-        Pedido pedido = pedidoFacade.find(this);
+        Pedido pedido = pedidoFacade.find(numeroPedido);
         Estadopedido estado = estadopedidoFacade.getEstadoPedido(nuevoEstado);
         pedido.setEstado(estado);
         pedidoFacade.edit(pedido);

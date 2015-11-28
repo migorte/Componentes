@@ -16,6 +16,8 @@ import javax.ejb.Remote;
 @Remote
 public interface PedidoControladorRemote {
     
+    public void newPedido(Pedido pedido);
+    
     public List<Pedido> getPedidosPendientes();
     
     public List<Pedido> getPedidosAbonado(String nif);

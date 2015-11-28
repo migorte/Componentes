@@ -6,10 +6,14 @@
 package vinotecacliente;
 
 import Despliegue.AbonadoControladorRemote;
+import Despliegue.PedidoControladorRemote;
 import Despliegue.VinoControladorRemote;
 import Dominio.Bodega;
+import Dominio.Estadopedido;
+import Dominio.Pedido;
 import Dominio.Referencia;
 import Dominio.Vino;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -20,6 +24,8 @@ import javax.ejb.EJB;
  */
 public class Main {
 
+    @EJB
+    private static PedidoControladorRemote pedidoControlador;
     @EJB
     private static VinoControladorRemote vinoControlador;
     @EJB
@@ -45,14 +51,13 @@ public class Main {
         }
 
         Bodega bodega = vinoControlador.getBodega(1);
-        
+
 //        Bodega bodega = new Bodega();
 //
 //        bodega.setCif("123120000");
 //        bodega.setDireccion("Calle Bodegas Serrada");
 //        bodega.setNombre("De Alberto");
 //        bodega.setId(1);
-        
         Vino vino = new Vino();
 
         vino.setNombrecomercial("Cascarela");
@@ -86,6 +91,36 @@ public class Main {
             System.out.println(preferencia.getIdpreferencia());
         }
 
+        System.out.println("--------------------Prueba de pedido-----------------------");
+        Pedido pedido = new Pedido();
+        Estadopedido estado = new Estadopedido();
+        estado.setClave("P");
+        estado.setNombre("Pendiente");
+        pedido.setEstado(estado);
+        pedido.setNotaentrega("Entregar en una caja rosa");
+        pedido.setNif("123456");
+        pedido.setImporte((float) 27.5);
+        pedido.setFechaentrega(Calendar.getInstance().getTime());
+        pedido.setFecharealizacion(null);
+        pedido.setFecharecepcion(null);
+        pedidoControlador.newPedido(pedido);
+
+        List<Dominio.Pedido> listaPendientes = pedidoControlador.getPedidosPendientes();
+        Iterator<Dominio.Pedido> iteradorPendientes = listaPendientes.iterator();
+        while (iteradorPendientes.hasNext()) {
+            Dominio.Pedido pendiente = iteradorPendientes.next();
+            System.out.println(pendiente.getNumero());
+        }
+
+        List<Dominio.Pedido> listaPedidosRafiki = pedidoControlador.getPedidosAbonado("123456");
+        Iterator<Dominio.Pedido> iteradorRafiki = listaPedidosRafiki.iterator();
+        while (iteradorRafiki.hasNext()) {
+            Dominio.Pedido rafiki = iteradorRafiki.next();
+            System.out.println(rafiki.getNumero());
+            pedidoControlador.editPedido(rafiki.getNumero(), "T");
+        }
+        
+        
     }
 
 }

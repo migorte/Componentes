@@ -5,6 +5,7 @@
  */
 package Persistencia;
 
+import Dominio.Estadopedido;
 import Dominio.Pedido;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -34,7 +35,10 @@ public class PedidoFacade extends AbstractFacade<Pedido> implements PedidoFacade
     @Override
     public List<Pedido> getPedidosPendientes() {
         Query query = em.createNamedQuery("Pedido.findPendientes");
-        query.setParameter("estado", 'P');
+        Estadopedido pedido = new Estadopedido();
+        pedido.setClave("P");
+        pedido.setNombre("Pendiente");
+        query.setParameter("estado", pedido);
         return (List<Dominio.Pedido>) query.getResultList();
     }
 
