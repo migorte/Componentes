@@ -69,4 +69,9 @@ public class VinoControlador implements VinoControladorRemote {
     public Bodega getBodega(int id) {
         return bodegaFacade.find(id);
     }
+    
+    @Override
+    public Referencia getReferenciaById(int codigo){
+        return referenciaFacade.find(codigo);
+    }
 }

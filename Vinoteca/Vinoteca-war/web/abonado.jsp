@@ -28,7 +28,7 @@
                     if (referencia.getVinoid().getId().equals(vino.getId())) {
             %>
             <p><%=referencia.getContenidoencl()%>  ||  <%=referencia.getPrecio()%></p>
-            <form action = "AddReferencia?referencia=<%=referencia%>" method="post">
+            <form action = "AddReferencia?codigoRef=<%=referencia.getCodigo()%>" method="post">
                 <input type="submit" name="add" class="login login-submit" value="Add">
             </form>
         </div>
@@ -37,7 +37,7 @@
             }
         %>
         <div class="login-card">
-            <form action = "carro.jsp" method="post">
+            <form action = "/CarroServlet" method="post">
                 <input type="submit" name="ver_carro" class="login login-submit" value="Ver carro">
             </form>
         </div>

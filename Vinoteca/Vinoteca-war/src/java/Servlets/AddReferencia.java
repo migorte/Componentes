@@ -6,8 +6,15 @@
 package Servlets;
 
 import CarroCompra.CarroLocal;
+import Despliegue.VinoControladorRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +29,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "AddReferencia", urlPatterns = {"/AddReferencia"})
 public class AddReferencia extends HttpServlet {
+    CarroLocal carro = lookupCarroLocal();
+    @EJB
+    private VinoControladorRemote vinoControlador;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +47,10 @@ public class AddReferencia extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         HttpSession sesion = request.getSession(false);
-
-        CarroLocal carro = (CarroLocal) sesion.getAttribute("carro");
-
-        Dominio.Referencia referencia = (Dominio.Referencia) request.getAttribute("referencia");
+        
+        int codigo = Integer.parseInt(request.getParameter("codigoRef"));
+        
+        carro.addReferencia(vinoControlador.getReferenciaById(codigo));
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/PreferenciasAbonadoServlet");
         dispatcher.forward(request, response);
@@ -84,5 +94,15 @@ public class AddReferencia extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private CarroLocal lookupCarroLocal() {
+        try {
+            Context c = new InitialContext();
+            return (CarroLocal) c.lookup("java:global/Vinoteca/Vinoteca-war/Carro!CarroCompra.CarroLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 
 }

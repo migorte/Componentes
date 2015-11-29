@@ -1,18 +1,15 @@
-package Servlets;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Servlets;
 
 import CarroCompra.CarroLocal;
-import Despliegue.AbonadoControladorRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -26,15 +23,12 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Miguel
+ * @author Miguel Ortega
  */
-@EJB(name="Carro", beanInterface=CarroLocal.class)
+@WebServlet(name = "CarroServlet", urlPatterns = {"/CarroServlet"})
+public class CarroServlet extends HttpServlet {
 
-@WebServlet(urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
     CarroLocal carro = lookupCarroLocal();
-    @EJB
-    private AbonadoControladorRemote abonadoControlador;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,29 +42,12 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        
-        String url = "";
-        
-        if(abonadoControlador.isAbonado(login)){
-            if(abonadoControlador.isPsswdOK(login, password)){
-                url = "/PreferenciasAbonadoServlet";
-                HttpSession sesion = request.getSession();
-                sesion.setAttribute("login", login);
-            }
-        }
-        
-        else if (login.equals("empleado"))
-            url = "/empleado.jsp";
-        
-        else url = "/loginincorrecto.jsp";
-        
-        
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+
+        HttpSession sesion = request.getSession(false);
+        sesion.setAttribute("carro", carro.getCarro());
+
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/carro.jsp");
         dispatcher.forward(request, response);
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

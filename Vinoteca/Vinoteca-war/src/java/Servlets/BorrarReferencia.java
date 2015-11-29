@@ -7,6 +7,11 @@ package Servlets;
 
 import CarroCompra.CarroLocal;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +26,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "BorrarReferencia", urlPatterns = {"/BorrarReferencia"})
 public class BorrarReferencia extends HttpServlet {
+    CarroLocal carro = lookupCarroLocal();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,8 +42,6 @@ public class BorrarReferencia extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         HttpSession sesion = request.getSession(false);
-        
-        CarroLocal carro = (CarroLocal) sesion.getAttribute("carro");
         
         int codigoReferencia = Integer.parseInt(request.getParameter("idref"));
         
@@ -85,5 +89,15 @@ public class BorrarReferencia extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private CarroLocal lookupCarroLocal() {
+        try {
+            Context c = new InitialContext();
+            return (CarroLocal) c.lookup("java:global/Vinoteca/Vinoteca-war/Carro!CarroCompra.CarroLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 
 }
