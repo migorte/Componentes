@@ -6,6 +6,7 @@
 package Despliegue;
 
 import Dominio.Bodega;
+import Dominio.Referencia;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -22,4 +23,6 @@ public interface VinoControladorRemote {
     public void addReferencia(Dominio.Referencia referencia);
     
     public Bodega getBodega(int id); 
+    
+    public Referencia getReferenciaById(int codigo);
 }
