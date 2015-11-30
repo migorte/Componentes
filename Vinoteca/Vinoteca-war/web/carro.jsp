@@ -12,12 +12,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
         <%
             List<Dominio.Referencia> carro = (List<Dominio.Referencia>) session.getAttribute("carro");
             List<Dominio.Vino> listaVinos = (List<Dominio.Vino>) session.getAttribute("listaVinos");
+            int flag = 0;
             for (Dominio.Referencia referencia : carro) {
+                flag = 1;
         %>
         <div class="login-card">
             <%
@@ -26,14 +29,22 @@
             %>    
             <h5><%=vino.getNombrecomercial()%>  ||  <%=vino.getDenominacion()%>  ||  <%=vino.getCategoria()%>  ||  <%=vino.getAnyo()%></h5>
             <p><%=referencia.getContenidoencl()%>  ||  <%=referencia.getPrecio()%></p>
-            <form action = "BorrarReferencia?idref=<%=referencia.getCodigo()%>" method="post">
-                <input type="submit" name="remove" class="login login-submit" value="Remove">
+            <form action = "CarroServlet?idref=<%=referencia.getCodigo()%>" method="post">
+                <input type="submit" name="accion_carro" class="login login-submit" value="Remove">
             </form>
+            <%
+                    }
+                }
+            %>
         </div>
         <%
-                    }
-                    break;
-                }
+            }
+            if (flag == 0) {
+        %>
+        <div class="login-card">
+            <p> No hay productos en su carro</p>
+        </div>       
+        <%
             }
         %>
     </body>

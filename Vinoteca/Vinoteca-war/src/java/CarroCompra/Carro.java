@@ -6,6 +6,7 @@
 package CarroCompra;
 
 import Dominio.Referencia;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -38,7 +39,7 @@ public class Carro implements CarroLocal {
     
     @Override
     public List<Dominio.Referencia> getCarro(){
-        return (List<Dominio.Referencia>) carro.values();
+        return new ArrayList<>(carro.values());
     }
 
     @Remove

@@ -32,7 +32,6 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
-    CarroLocal carro = lookupCarroLocal();
     @EJB
     private AbonadoControladorRemote abonadoControlador;
 
@@ -111,15 +110,4 @@ public class LoginServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private CarroLocal lookupCarroLocal() {
-        try {
-            Context c = new InitialContext();
-            return (CarroLocal) c.lookup("java:global/Vinoteca/Vinoteca-war/Carro!CarroCompra.CarroLocal");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
 }

@@ -15,8 +15,11 @@
     </head>
     <body>
 
-        <% List<Dominio.Vino> listaVinos = (List<Dominio.Vino>) session.getAttribute("listaVinos");
+        <%
+            List<Dominio.Vino> listaVinos = (List<Dominio.Vino>) session.getAttribute("listaVinos");
             List<Dominio.Referencia> listaReferencias = (List<Dominio.Referencia>) session.getAttribute("listaReferencias");
+
+            int flag = 0;
 
             for (Dominio.Vino vino : listaVinos) {
         %>
@@ -26,21 +29,28 @@
             <%
                 for (Dominio.Referencia referencia : listaReferencias) {
                     if (referencia.getVinoid().getId().equals(vino.getId())) {
+                        flag = 1;
             %>
             <p><%=referencia.getContenidoencl()%>  ||  <%=referencia.getPrecio()%></p>
-            <form action = "AddReferencia?codigoRef=<%=referencia.getCodigo()%>" method="post">
-                <input type="submit" name="add" class="login login-submit" value="Add">
+            <form action = "CarroServlet?codigoRef=<%=referencia.getCodigo()%>" method="post">
+                <input type="submit" name="accion_carro" class="login login-submit" value="Add">
             </form>
-        </div>
-        <%          }
+            <%          }
                 }
+                if (flag == 0) {
+            %>
+            <p>No hay referencias para este vino</p>
+            <%
+                }
+            %>
+        </div>
+        <%
             }
         %>
         <div class="login-card">
-            <form action = "/CarroServlet" method="post">
-                <input type="submit" name="ver_carro" class="login login-submit" value="Ver carro">
+            <form action = "CarroServlet" method="post">
+                <input type="submit" name="accion_carro" class="login login-submit" value="Ver carro">
             </form>
         </div>
-
     </body>
 </html>

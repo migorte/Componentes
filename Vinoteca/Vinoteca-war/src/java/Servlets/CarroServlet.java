@@ -6,10 +6,12 @@
 package Servlets;
 
 import CarroCompra.CarroLocal;
+import Despliegue.VinoControladorRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -28,6 +30,9 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "CarroServlet", urlPatterns = {"/CarroServlet"})
 public class CarroServlet extends HttpServlet {
 
+    @EJB
+    private VinoControladorRemote vinoControlador;
+
     CarroLocal carro = lookupCarroLocal();
 
     /**
@@ -44,10 +49,41 @@ public class CarroServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         HttpSession sesion = request.getSession(false);
-        sesion.setAttribute("carro", carro.getCarro());
 
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/carro.jsp");
+        String accion_carro = request.getParameter("accion_carro");
+
+        String url = "";
+
+        switch (accion_carro) {
+            case "Add":
+                int codigo = Integer.parseInt(request.getParameter("codigoRef"));
+
+                carro.addReferencia(vinoControlador.getReferenciaById(codigo));
+
+                url = "/PreferenciasAbonadoServlet";
+
+                break;
+
+            case "Ver carro":
+                sesion.setAttribute("carro", carro.getCarro());
+
+                url = "/carro.jsp";
+
+                break;
+
+            case "Remove":
+                int codigoReferencia = Integer.parseInt(request.getParameter("idref"));
+
+                carro.removeReferencia(codigoReferencia);
+                
+                url = "/PreferenciasAbonadoServlet";
+                
+                break;
+        }
+
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
