@@ -1,14 +1,11 @@
-package Servlets;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Servlets;
 
-import Despliegue.AbonadoControladorRemote;
 import java.io.IOException;
-import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,11 +18,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Miguel
  */
-
-@WebServlet(urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
-    @EJB
-    private AbonadoControladorRemote abonadoControlador;
+@WebServlet(name = "EmpleadoServlet", urlPatterns = {"/EmpleadoServlet"})
+public class EmpleadoServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,29 +33,41 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
+
+        String accion_empleado = request.getParameter("accion_empleado");
+
+        HttpSession sesion = request.getSession();
         
         String url = "";
-        
-        if(abonadoControlador.isAbonado(login)){
-            if(abonadoControlador.isPsswdOK(login, password)){
-                url = "/PreferenciasAbonadoServlet";
-                HttpSession sesion = request.getSession();
-                sesion.setAttribute("login", login);
-            }
+
+        switch (accion_empleado) {
+            case "Ver pedidos pendientes":
+
+               // sesion.setAttribute("listaPendientes", getPedidosPendientes());
+                
+                url="/pedidospendientes.jsp";
+
+                break;
+
+            case "Ver pedidos de usuario":
+
+                String login_usuario = request.getParameter("login_usuario");
+
+               // sesion.setAttribute("listaPedidosUsuario", getPedidosAbonado(login_usuario));
+                
+                url="/pedidosusuario.jsp";
+
+                break;
+
+            case "Cambiar estado de pedido":
+                
+                url="";
+
+                break;
         }
-        
-        else if (login.equals("empleado"))
-            url = "/empleado.jsp";
-        
-        else url = "/loginincorrecto.jsp";
-        
-        
+
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -102,4 +108,5 @@ public class LoginServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

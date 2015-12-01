@@ -5,7 +5,7 @@
  */
 package Servlets;
 
-import CarroCompra.CarroLocal;
+import Despliegue.CarroRemote;
 import Despliegue.VinoControladorRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,11 +29,11 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "CarroServlet", urlPatterns = {"/CarroServlet"})
 public class CarroServlet extends HttpServlet {
+    CarroRemote carro = lookupCarroRemote();
 
     @EJB
     private VinoControladorRemote vinoControlador;
 
-    CarroLocal carro = lookupCarroLocal();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -125,10 +125,10 @@ public class CarroServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private CarroLocal lookupCarroLocal() {
+    private CarroRemote lookupCarroRemote() {
         try {
             Context c = new InitialContext();
-            return (CarroLocal) c.lookup("java:global/Vinoteca/Vinoteca-war/Carro!CarroCompra.CarroLocal");
+            return (CarroRemote) c.lookup("java:global/Vinoteca/VinotecaCarro/Carro!Despliegue.CarroRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
