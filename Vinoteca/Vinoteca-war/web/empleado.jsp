@@ -14,13 +14,14 @@
     </head>
     <body>
         <div class="login-card">
-            <form action = "LoginServlet" method="post" >
-                <input type="submit" name="pendientes" class="login login-submit" value="Ver pedidos pendientes">
+            <form action = "EmpleadoServlet" method="post" >
+                <input type="submit" name="accion_empleado" class="login login-submit" value="Ver pedidos pendientes">
             </form>
-            <form action = "LoginServlet" method="post" >
+            <form action = "EmpleadoServlet" method="post" >
+                <input type="text" name="login_usuario" placeholder="Login del usuario">
                 <input type="submit" name="pedidos_usuario" class="login login-submit" value="Ver pedidos de usuario">
             </form>
-            <form action = "LoginServlet" method="post" >
+            <form action = "EmpleadoServlet" method="post" >
                 <input type="submit" name="cambiar_estado" class="login login-submit" value="Cambiar estado de pedido">
             </form>
         </div>
