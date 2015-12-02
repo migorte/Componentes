@@ -22,6 +22,7 @@ import ws.PedidoWS_Service;
  */
 @WebServlet(name = "EmpleadoServlet", urlPatterns = {"/EmpleadoServlet"})
 public class EmpleadoServlet extends HttpServlet {
+
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/PedidoWS/PedidoWS.wsdl")
     private PedidoWS_Service service;
 
@@ -41,15 +42,15 @@ public class EmpleadoServlet extends HttpServlet {
         String accion_empleado = request.getParameter("accion_empleado");
 
         HttpSession sesion = request.getSession();
-        
+
         String url = "";
 
         switch (accion_empleado) {
             case "Ver pedidos pendientes":
 
                 sesion.setAttribute("listaPendientes", getPedidosPendientes());
-                
-                url="/pedidospendientes.jsp";
+
+                url = "/pedidospendientes.jsp";
 
                 break;
 
@@ -58,15 +59,43 @@ public class EmpleadoServlet extends HttpServlet {
                 String login_usuario = request.getParameter("login_usuario");
 
                 sesion.setAttribute("listaPedidosUsuario", getPedidosAbonado(login_usuario));
-                
-                url="/pedidosusuario.jsp";
+
+                url = "/pedidosusuario.jsp";
 
                 break;
 
             case "Cambiar estado de pedido":
-                
-                
-                url="/cambiarestado.jsp";
+
+                int numero = Integer.parseInt(request.getParameter("numero_pedido"));
+                String estado = request.getParameter("estado");
+
+                switch (estado) {
+                    case "Pendiente":
+                        editPedido(numero, "P");
+                        break;
+
+                    case "Tramitado":
+                        editPedido(numero, "T");
+                        break;
+
+                    case "Completado":
+                        editPedido(numero, "C");
+                        break;
+                    
+                    case "Servido":
+                        editPedido(numero, "S");
+                        break;
+                        
+                    case "Facturado":
+                        editPedido(numero, "F");
+                        break;
+                        
+                    case "Abonado":
+                        editPedido(numero, "A");
+                        break;
+                }
+
+                url = "/empleado.jsp";
 
                 break;
         }
@@ -128,5 +157,11 @@ public class EmpleadoServlet extends HttpServlet {
         return port.getPedidosAbonado(nif);
     }
 
+    private void editPedido(int numeroPedido, java.lang.String nuevoEstado) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        ws.PedidoWS port = service.getPedidoWSPort();
+        port.editPedido(numeroPedido, nuevoEstado);
+    }
 
 }

@@ -22,6 +22,15 @@
                 <input type="submit" name="accion_empleado" class="login login-submit" value="Ver pedidos de usuario">
             </form>
             <form action = "EmpleadoServlet" method="post" >
+                <input type="text" name="numero_pedido" placeholder="Numero del pedido">
+                <select name="estado">
+                    <option value="Pendiente" selected="selected">Pendiente</option>
+                    <option value="Tramitado">Tramitado</option>
+                    <option value="Completado">Completado</option>
+                    <option value="Servido">Servido</option>
+                    <option value="Facturado">Facturado</option>
+                    <option value="Abonado">Abonado</option>
+                </select>
                 <input type="submit" name="accion_empleado" class="login login-submit" value="Cambiar estado de pedido">
             </form>
         </div>
