@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://Asus-Miguel:8080/PedidoWS/PedidoWS?wsdl" uri="wsdl/Asus-Miguel_8080/PedidoWS/PedidoWS.wsdl"/>
+    <system systemId="http://Asus-Miguel:8080/PedidoWS/PedidoWS?xsd=1" uri="wsdl/Asus-Miguel_8080/PedidoWS/PedidoWS.xsd_1.xsd"/>
+</catalog>

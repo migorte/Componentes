@@ -14,12 +14,11 @@ import javax.ejb.Remote;
  * @author Miguel
  */
 @Remote
-public interface CarroRemote {
+public interface CarroControladorRemote {
     
     public void addReferencia(Referencia referencia);
     
     public void removeReferencia(int codigo);
     
     public List<Dominio.Referencia> getCarro();
-    
 }

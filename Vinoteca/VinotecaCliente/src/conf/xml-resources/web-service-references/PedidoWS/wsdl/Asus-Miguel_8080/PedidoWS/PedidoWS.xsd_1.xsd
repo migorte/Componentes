@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://WS/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://WS/">
+
+<xs:element name="editPedido" type="tns:editPedido"/>
+
+<xs:element name="estadopedido" type="tns:estadopedido"/>
+
+<xs:element name="getPedidosAbonado" type="tns:getPedidosAbonado"/>
+
+<xs:element name="getPedidosAbonadoResponse" type="tns:getPedidosAbonadoResponse"/>
+
+<xs:element name="getPedidosPendientes" type="tns:getPedidosPendientes"/>
+
+<xs:element name="getPedidosPendientesResponse" type="tns:getPedidosPendientesResponse"/>
+
+<xs:element name="newPedido" type="tns:newPedido"/>
+
+<xs:element name="pedido" type="tns:pedido"/>
+
+<xs:complexType name="newPedido">
+<xs:sequence>
+<xs:element name="pedido" type="tns:pedido" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="pedido">
+<xs:sequence>
+<xs:element name="estado" type="tns:estadopedido" minOccurs="0"/>
+<xs:element name="fechaentrega" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="fecharealizacion" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="fecharecepcion" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="importe" type="xs:float" minOccurs="0"/>
+<xs:element name="nif" type="xs:string" minOccurs="0"/>
+<xs:element name="notaentrega" type="xs:string" minOccurs="0"/>
+<xs:element name="numero" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="estadopedido">
+<xs:sequence>
+<xs:element name="clave" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getPedidosAbonado">
+<xs:sequence>
+<xs:element name="nif" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getPedidosAbonadoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:pedido" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getPedidosPendientes">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getPedidosPendientesResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:pedido" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="editPedido">
+<xs:sequence>
+<xs:element name="numeroPedido" type="xs:int"/>
+<xs:element name="nuevoEstado" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

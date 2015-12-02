@@ -5,7 +5,7 @@
  */
 package Servlets;
 
-import Despliegue.CarroRemote;
+import Despliegue.CarroControladorRemote;
 import Despliegue.VinoControladorRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "CarroServlet", urlPatterns = {"/CarroServlet"})
 public class CarroServlet extends HttpServlet {
-    CarroRemote carro = lookupCarroRemote();
+    CarroControladorRemote carroControlador = lookupCarroControladorRemote();
 
     @EJB
     private VinoControladorRemote vinoControlador;
@@ -58,14 +58,14 @@ public class CarroServlet extends HttpServlet {
             case "Add":
                 int codigo = Integer.parseInt(request.getParameter("codigoRef"));
 
-                carro.addReferencia(vinoControlador.getReferenciaById(codigo));
+                carroControlador.addReferencia(vinoControlador.getReferenciaById(codigo));
 
                 url = "/PreferenciasAbonadoServlet";
 
                 break;
 
             case "Ver carro":
-                sesion.setAttribute("carro", carro.getCarro());
+                sesion.setAttribute("carro", carroControlador.getCarro());
 
                 url = "/carro.jsp";
 
@@ -74,7 +74,7 @@ public class CarroServlet extends HttpServlet {
             case "Remove":
                 int codigoReferencia = Integer.parseInt(request.getParameter("idref"));
 
-                carro.removeReferencia(codigoReferencia);
+                carroControlador.removeReferencia(codigoReferencia);
                 
                 url = "/PreferenciasAbonadoServlet";
                 
@@ -125,10 +125,10 @@ public class CarroServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private CarroRemote lookupCarroRemote() {
+    private CarroControladorRemote lookupCarroControladorRemote() {
         try {
             Context c = new InitialContext();
-            return (CarroRemote) c.lookup("java:global/Vinoteca/VinotecaCarro/Carro!Despliegue.CarroRemote");
+            return (CarroControladorRemote) c.lookup("java:global/VinotecaCarro-ejb/CarroControlador!Despliegue.CarroControladorRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

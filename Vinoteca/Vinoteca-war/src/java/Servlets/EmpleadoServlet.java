@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.WebServiceRef;
+import ws.PedidoWS_Service;
 
 /**
  *
@@ -20,6 +22,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "EmpleadoServlet", urlPatterns = {"/EmpleadoServlet"})
 public class EmpleadoServlet extends HttpServlet {
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/PedidoWS/PedidoWS.wsdl")
+    private PedidoWS_Service service;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,7 +47,7 @@ public class EmpleadoServlet extends HttpServlet {
         switch (accion_empleado) {
             case "Ver pedidos pendientes":
 
-               // sesion.setAttribute("listaPendientes", getPedidosPendientes());
+                sesion.setAttribute("listaPendientes", getPedidosPendientes());
                 
                 url="/pedidospendientes.jsp";
 
@@ -108,5 +112,13 @@ public class EmpleadoServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private java.util.List<ws.Pedido> getPedidosPendientes() {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        ws.PedidoWS port = service.getPedidoWSPort();
+        return port.getPedidosPendientes();
+    }
+
 
 }

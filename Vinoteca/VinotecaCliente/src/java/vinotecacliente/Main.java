@@ -17,12 +17,16 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.xml.ws.WebServiceRef;
 
 /**
  *
  * @author Miguel
  */
 public class Main {
+
+    @WebServiceRef(wsdlLocation = "META-INF/wsdl/Asus-Miguel_8080/PedidoWS/PedidoWS.wsdl")
+    private static PedidoWS_Service service;
 
     @EJB
     private static PedidoControladorRemote pedidoControlador;
@@ -119,8 +123,31 @@ public class Main {
             System.out.println(rafiki.getNumero());
             pedidoControlador.editPedido(rafiki.getNumero(), "T");
         }
-        
-        
+
+        List<vinotecacliente.Pedido> pendientes = getPedidosAbonado("123456");
+
+        System.out.println("----------------Me casaba con Elisa Mouliaá------------------");
+        Iterator<vinotecacliente.Pedido> ite = pendientes.iterator();
+        while (ite.hasNext()) {
+            vinotecacliente.Pedido rafiki = ite.next();
+            System.out.println(rafiki.getNumero());
+            pedidoControlador.editPedido(rafiki.getNumero(), "T");
+        }
+
+    }
+
+    private static java.util.List<vinotecacliente.Pedido> getPedidosPendientes() {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        vinotecacliente.PedidoWS port = service.getPedidoWSPort();
+        return port.getPedidosPendientes();
+    }
+
+    private static java.util.List<vinotecacliente.Pedido> getPedidosAbonado(java.lang.String nif) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        vinotecacliente.PedidoWS port = service.getPedidoWSPort();
+        return port.getPedidosAbonado(nif);
     }
 
 }

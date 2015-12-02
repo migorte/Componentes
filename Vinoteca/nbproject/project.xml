@@ -20,11 +20,7 @@
                     <path-in-war>/</path-in-war>
                 </library>
                 <library>
-                    <file>${reference.VinotecaCarro.dist-ear}</file>
-                    <path-in-war>/</path-in-war>
-                </library>
-                <library>
-                    <file>${reference.VinotecaPedido-ejb.dist-ear}</file>
+                    <file>${reference.VinotecaCarro-ejb.dist-ear}</file>
                     <path-in-war>/</path-in-war>
                 </library>
             </web-module-additional-libraries>
@@ -47,15 +43,7 @@
                 <id>dist-ear</id>
             </reference>
             <reference>
-                <foreign-project>VinotecaCarro</foreign-project>
-                <artifact-type>j2ee_ear_archive</artifact-type>
-                <script>build.xml</script>
-                <target>dist-ear</target>
-                <clean-target>clean-ear</clean-target>
-                <id>dist-ear</id>
-            </reference>
-            <reference>
-                <foreign-project>VinotecaPedido-ejb</foreign-project>
+                <foreign-project>VinotecaCarro-ejb</foreign-project>
                 <artifact-type>j2ee_ear_archive</artifact-type>
                 <script>build.xml</script>
                 <target>dist-ear</target>

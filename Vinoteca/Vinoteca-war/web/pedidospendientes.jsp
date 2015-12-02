@@ -14,9 +14,9 @@
     </head>
     <body>
         <%
-            List<Dominio.Pedido> listaPendientes = (List<Dominio.Pedido>) session.getAttribute("listaPendientes");
+            List<ws.Pedido> listaPendientes = (List<ws.Pedido>) session.getAttribute("listaPendientes");
             int flag = 0;
-            for (Dominio.Pedido pedido : listaPendientes) {
+            for (ws.Pedido pedido : listaPendientes) {
                 flag = 1;
         %>
         <div class="login-card">
