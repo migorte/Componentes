@@ -57,7 +57,7 @@ public class EmpleadoServlet extends HttpServlet {
 
                 String login_usuario = request.getParameter("login_usuario");
 
-               // sesion.setAttribute("listaPedidosUsuario", getPedidosAbonado(login_usuario));
+                sesion.setAttribute("listaPedidosUsuario", getPedidosAbonado(login_usuario));
                 
                 url="/pedidosusuario.jsp";
 
@@ -65,7 +65,8 @@ public class EmpleadoServlet extends HttpServlet {
 
             case "Cambiar estado de pedido":
                 
-                url="";
+                
+                url="/cambiarestado.jsp";
 
                 break;
         }
@@ -118,6 +119,13 @@ public class EmpleadoServlet extends HttpServlet {
         // If the calling of port operations may lead to race condition some synchronization is required.
         ws.PedidoWS port = service.getPedidoWSPort();
         return port.getPedidosPendientes();
+    }
+
+    private java.util.List<ws.Pedido> getPedidosAbonado(java.lang.String nif) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        ws.PedidoWS port = service.getPedidoWSPort();
+        return port.getPedidosAbonado(nif);
     }
 
 

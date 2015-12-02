@@ -1,6 +1,6 @@
 <%-- 
-    Document   : pedidosusuario
-    Created on : 30-nov-2015, 14:02:34
+    Document   : cambiarestado
+    Created on : 02-dic-2015, 17:26:30
     Author     : Miguel
 --%>
 
@@ -15,9 +15,9 @@
     </head>
     <body>
         <%
-            List<ws.Pedido> listaPedidosUsuario = (List<ws.Pedido>) session.getAttribute("listaPedidosUsuario");
+            List<ws.Pedido> listaPendientes = (List<ws.Pedido>) session.getAttribute("listaPendientes");
             int flag = 0;
-            for (ws.Pedido pedido : listaPedidosUsuario) {
+            for (ws.Pedido pedido : listaPendientes) {
                 flag = 1;
         %>
         <div class="login-card">
@@ -30,7 +30,7 @@
             if (flag == 0) {
         %>
         <div class="login-card">
-            <h5>El usuario no tiene pedidos</h5>
+            <h5>No hay pedidos pendientes</h5>
         </div>
         <%
             }

@@ -11,6 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
         <%
@@ -22,7 +23,7 @@
         <div class="login-card">
             <h5>NPedido=<%=pedido.getNumero()%>  Abonado=<%=pedido.getNif()%>  Importe=<%=pedido.getImporte()%></h5>
             <h5>Fecha de entrega=<%=pedido.getFechaentrega()%></h5>
-            <h5>Nota=<%=pedido.getNotaentrega()%></h5>
+            <h5>Nota: <%=pedido.getNotaentrega()%></h5>
         </div>
         <%
             }
