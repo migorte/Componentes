@@ -44,7 +44,12 @@ public class PreferenciasAbonadoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
+        /*
+        Se obtienen todas las preferencias de un abonado y se organizan en una lista
+        de todas las referencias relacionadas con sus preferencias y los vinos a los
+        que referencian
+        */
         HttpSession sesion = request.getSession(false);
         String login = (String) sesion.getAttribute("login");
         List<Dominio.Preferencia> listaPreferencias = abonadoControlador.getPreferencias(login);

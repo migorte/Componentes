@@ -35,5 +35,10 @@
         <%
             }
         %>
+        <div class="login-card">
+            <form action="CarroServlet" method="post">
+                <input type="submit" name="accion_carro" class="login login-submit" value="Cerrar sesión">
+            </form>
+        </div>
     </body>
 </html>

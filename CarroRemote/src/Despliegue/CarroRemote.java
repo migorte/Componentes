@@ -21,4 +21,8 @@ public interface CarroRemote {
     public void removeReferencia(int codigo);
     
     public List<Dominio.Referencia> getCarro();
+    
+    public Float getPrecio();
+    
+    public void vaciarCarro();
 }

@@ -31,7 +31,7 @@
                     if (referencia.getVinoid().getId().equals(vino.getId())) {
                         flag = 1;
             %>
-            <p><%=referencia.getContenidoencl()%>  ||  <%=referencia.getPrecio()%></p>
+            <p>Contenido: <%=referencia.getContenidoencl()%>  ||  Precio: <%=referencia.getPrecio()%> euros</p>
             <form action = "CarroServlet?codigoRef=<%=referencia.getCodigo()%>" method="post">
                 <input type="submit" name="accion_carro" class="login login-submit" value="Add">
             </form>
@@ -50,6 +50,11 @@
         <div class="login-card">
             <form action = "CarroServlet" method="post">
                 <input type="submit" name="accion_carro" class="login login-submit" value="Ver carro">
+            </form>
+        </div>
+        <div class="login-card">
+            <form action="CarroServlet" method="post">
+                <input type="submit" name="accion_carro" class="login login-submit" value="Cerrar sesión">
             </form>
         </div>
     </body>

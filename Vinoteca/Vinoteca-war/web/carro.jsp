@@ -28,7 +28,7 @@
                     if (vino.getId().equals(referencia.getVinoid().getId())) {
             %>    
             <h5><%=vino.getNombrecomercial()%>  ||  <%=vino.getDenominacion()%>  ||  <%=vino.getCategoria()%>  ||  <%=vino.getAnyo()%></h5>
-            <p><%=referencia.getContenidoencl()%>  ||  <%=referencia.getPrecio()%></p>
+            <p>Contenido: <%=referencia.getContenidoencl()%>  ||  Precio: <%=referencia.getPrecio()%> euros</p>
             <form action = "CarroServlet?idref=<%=referencia.getCodigo()%>" method="post">
                 <input type="submit" name="accion_carro" class="login login-submit" value="Remove">
             </form>
@@ -47,11 +47,18 @@
         <%
             }
         %>
-        <form action="ProcesarPedidoServlet" method="post">
-            <input type="submit" name="accion" class="login login-submit" value="Realizar pedido">
-        </form>
-        <form action="ProcesarPedidoServlet" method="post">
-            <input type="submit" name="accion" class="login login-submit" value="Descartar pedido">
-        </form>
+        <div class="login-card">
+            <form action="CarroServlet" method="post">
+                <input type="submit" name="accion_carro" class="login login-submit" value="Realizar pedido">
+            </form>
+            <form action="CarroServlet" method="post">
+                <input type="submit" name="accion_carro" class="login login-submit" value="Continuar comprando">
+            </form>
+        </div>
+        <div class="login-card">
+            <form action="CarroServlet" method="post">
+                <input type="submit" name="accion_carro" class="login login-submit" value="Cerrar sesión">
+            </form>
+        </div>
     </body>
 </html>

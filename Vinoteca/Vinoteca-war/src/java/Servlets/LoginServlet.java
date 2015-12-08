@@ -45,6 +45,7 @@ public class LoginServlet extends HttpServlet {
         String accion = request.getParameter("accion");
         String url = "";
         switch (accion) {
+            //Entrar en el sistema como cliente
             case "Entrar":
                 if (abonadoControlador.isAbonado(login)) {
                     if (abonadoControlador.isPsswdOK(login, password)) {
@@ -56,6 +57,7 @@ public class LoginServlet extends HttpServlet {
                 else url = "/loginincorrecto.jsp";
                 break;
             
+            //Entrar en el sistema como empleado
             case "Entrar como empleado":
                 url = "/empleado.jsp";
                 break;

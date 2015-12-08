@@ -36,5 +36,10 @@
                 <input type="submit" name="accion_empleado" class="login login-submit" value="Cambiar estado de pedido">
             </form>
         </div>
+        <div class="login-card">
+            <form action="CarroServlet" method="post">
+                <input type="submit" name="accion_carro" class="login login-submit" value="Cerrar sesión">
+            </form>
+        </div>
     </body>
 </html>

@@ -46,6 +46,7 @@ public class EmpleadoServlet extends HttpServlet {
         String url = "";
 
         switch (accion_empleado) {
+            //Ver todos los pedidos pendientes
             case "Ver pedidos pendientes":
 
                 sesion.setAttribute("listaPendientes", getPedidosPendientes());
@@ -53,7 +54,8 @@ public class EmpleadoServlet extends HttpServlet {
                 url = "/pedidospendientes.jsp";
 
                 break;
-
+            
+            //Ver todos los pedidos de un usuario
             case "Ver pedidos de usuario":
 
                 String login_usuario = request.getParameter("login_usuario");
@@ -63,7 +65,8 @@ public class EmpleadoServlet extends HttpServlet {
                 url = "/pedidosusuario.jsp";
 
                 break;
-
+            
+            //Cambiar el estado de un pedido
             case "Cambiar estado de pedido":
 
                 int numero = Integer.parseInt(request.getParameter("numero_pedido"));
