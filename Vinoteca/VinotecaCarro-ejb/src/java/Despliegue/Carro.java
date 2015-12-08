@@ -18,7 +18,7 @@ import javax.ejb.Stateful;
  * @author Miguel
  */
 @Stateful
-public class CarroControlador implements CarroControladorRemote {
+public class Carro implements CarroRemote {
 
     HashMap<Integer, Dominio.Referencia> carro;
     

@@ -47,5 +47,11 @@
         <%
             }
         %>
+        <form action="ProcesarPedidoServlet" method="post">
+            <input type="submit" name="accion" class="login login-submit" value="Realizar pedido">
+        </form>
+        <form action="ProcesarPedidoServlet" method="post">
+            <input type="submit" name="accion" class="login login-submit" value="Descartar pedido">
+        </form>
     </body>
 </html>

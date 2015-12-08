@@ -14,7 +14,7 @@ import javax.ejb.Remote;
  * @author Miguel
  */
 @Remote
-public interface CarroControladorRemote {
+public interface CarroRemote {
     
     public void addReferencia(Referencia referencia);
     

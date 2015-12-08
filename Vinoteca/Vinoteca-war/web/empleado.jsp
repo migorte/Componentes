@@ -17,12 +17,14 @@
             <form action = "EmpleadoServlet" method="post" >
                 <input type="submit" name="accion_empleado" class="login login-submit" value="Ver pedidos pendientes">
             </form>
+            <hr>
             <form action = "EmpleadoServlet" method="post" >
-                <input type="text" name="login_usuario" placeholder="Login del usuario">
+                <input type="text" name="login_usuario" placeholder="Login del usuario" required>
                 <input type="submit" name="accion_empleado" class="login login-submit" value="Ver pedidos de usuario">
             </form>
+            <hr>
             <form action = "EmpleadoServlet" method="post" >
-                <input type="text" name="numero_pedido" placeholder="Numero del pedido">
+                <input type="text" name="numero_pedido" placeholder="Numero del pedido" required>
                 <select name="estado">
                     <option value="Pendiente" selected="selected">Pendiente</option>
                     <option value="Tramitado">Tramitado</option>

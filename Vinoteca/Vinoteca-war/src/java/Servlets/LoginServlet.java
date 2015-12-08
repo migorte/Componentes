@@ -5,7 +5,6 @@ package Servlets;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import Despliegue.AbonadoControladorRemote;
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -21,9 +20,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author Miguel
  */
-
 @WebServlet(urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
+
     @EJB
     private AbonadoControladorRemote abonadoControlador;
 
@@ -39,29 +38,32 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        
+
+        String accion = request.getParameter("accion");
         String url = "";
-        
-        if(abonadoControlador.isAbonado(login)){
-            if(abonadoControlador.isPsswdOK(login, password)){
-                url = "/PreferenciasAbonadoServlet";
-                HttpSession sesion = request.getSession();
-                sesion.setAttribute("login", login);
-            }
-        }
-        
-        else if (login.equals("empleado"))
-            url = "/empleado.jsp";
-        
-        else url = "/loginincorrecto.jsp";
-        
-        
+        switch (accion) {
+            case "Entrar":
+                if (abonadoControlador.isAbonado(login)) {
+                    if (abonadoControlador.isPsswdOK(login, password)) {
+                        url = "/PreferenciasAbonadoServlet";
+                        HttpSession sesion = request.getSession();
+                        sesion.setAttribute("login", login);
+                    }
+                }
+                else url = "/loginincorrecto.jsp";
+                break;
+            
+            case "Entrar como empleado":
+                url = "/empleado.jsp";
+                break;
+        }                
+
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

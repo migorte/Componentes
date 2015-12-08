@@ -16,9 +16,13 @@
         <div class="login-card">
             <h1>Acceso</h1><br>
             <form action = "LoginServlet" method="post" >
-                <input name="login" type="text" placeholder="Nombre de usuario">
-                <input name="password" type="password" placeholder="Contraseña">
-                <input type="submit" name="login" class="login login-submit" value="Entrar">
+                <input name="login" type="text" placeholder="Nombre de usuario" required>
+                <input name="password" type="password" placeholder="Contraseña" required>
+                <input type="submit" name="accion" class="login login-submit" value="Entrar">
+            </form>
+            <hr>
+            <form action="LoginServlet" method="post">
+                <input type="submit" name="accion" class="login login-submit" value="Entrar como empleado">
             </form>
         </div>
     </body>

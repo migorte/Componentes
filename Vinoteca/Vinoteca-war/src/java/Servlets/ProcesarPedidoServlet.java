@@ -5,35 +5,25 @@
  */
 package Servlets;
 
-import Despliegue.CarroRemote;
-import Despliegue.VinoControladorRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ejb.EJB;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.WebServiceRef;
+import ws.PedidoWS_Service;
 
 /**
  *
- * @author Miguel Ortega
+ * @author Miguel
  */
-@WebServlet(name = "CarroServlet", urlPatterns = {"/CarroServlet"})
-public class CarroServlet extends HttpServlet {
-    CarroRemote carro = lookupCarroControladorRemote();
-
-    @EJB
-    private VinoControladorRemote vinoControlador;
-
+@WebServlet(name = "ProcesarPedidoServlet", urlPatterns = {"/ProcesarPedidoServlet"})
+public class ProcesarPedidoServlet extends HttpServlet {
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/PedidoWS/PedidoWS.wsdl")
+    private PedidoWS_Service service;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,43 +37,17 @@ public class CarroServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
         HttpSession sesion = request.getSession(false);
-
-        String accion_carro = request.getParameter("accion_carro");
-
-        String url = "";
-
-        switch (accion_carro) {
-            case "Add":
-                int codigo = Integer.parseInt(request.getParameter("codigoRef"));
-
-                carro.addReferencia(vinoControlador.getReferenciaById(codigo));
-
-                url = "/PreferenciasAbonadoServlet";
-
-                break;
-
-            case "Ver carro":
-                sesion.setAttribute("carro", carro.getCarro());
-
-                url = "/carro.jsp";
-
-                break;
-
-            case "Remove":
-                int codigoReferencia = Integer.parseInt(request.getParameter("idref"));
-
-                carro.removeReferencia(codigoReferencia);
-                
-                url = "/PreferenciasAbonadoServlet";
+        
+        String accion = request.getParameter("accion");
+        
+        switch(accion){
+            case "Realizar pedido":
+                Dominio.Pedido pedido = new Dominio.Pedido();
                 
                 break;
         }
-
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-        dispatcher.forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -125,14 +89,11 @@ public class CarroServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private CarroRemote lookupCarroControladorRemote() {
-        try {
-            Context c = new InitialContext();
-            return (CarroRemote) c.lookup("java:global/VinotecaCarro-ejb/CarroControlador!Despliegue.CarroControladorRemote");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
+    private void newPedido(ws.Pedido pedido) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        ws.PedidoWS port = service.getPedidoWSPort();
+        port.newPedido(pedido);
     }
 
 }
